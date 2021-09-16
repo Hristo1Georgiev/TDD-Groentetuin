@@ -65,10 +65,7 @@ describe("getCostsForCrop", ()=>{
         name: "corn",
         yield: 3,
     };
-    const pumpkin = {
-        name: "pumpkin",
-        yield: 4,
-    };
+
     test("Calculate the costs for one crop", ()=> {
                 const input = {
             crop: corn,

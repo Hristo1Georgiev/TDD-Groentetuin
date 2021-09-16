@@ -22,9 +22,13 @@ const getProfitForCrop= (input)=>{
      return   getRevenueForCrop(input) - getCostsForCrop(input)
 }
 
-
 const getTotalProfit = crop => crop.crops.reduce((sum, item) => {
         return sum + getProfitForCrop(item)},0);
+
+
+
+
+        
 
 module.exports = {
     getYieldForPlant,
