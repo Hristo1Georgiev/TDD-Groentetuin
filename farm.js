@@ -26,9 +26,14 @@ const getTotalProfit = crop => crop.crops.reduce((sum, item) => {
         return sum + getProfitForCrop(item)},0);
 
 
+const getYieldForCropEnvFactors = (input, environmentFactors) => {
+    if (!environmentFactors) {
+        return input.numCrops * input.crop.yield;
+    }
+    return input.numCrops * getYieldForPlant(input.crop, environmentFactors);
+}
 
 
-        
 
 module.exports = {
     getYieldForPlant,
@@ -37,5 +42,6 @@ module.exports = {
     getCostsForCrop,
     getRevenueForCrop,
     getProfitForCrop,
-    getTotalProfit
+    getTotalProfit,
+    getYieldForCropEnvFactors,
 }

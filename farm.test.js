@@ -5,7 +5,8 @@ const {
     getCostsForCrop,
     getRevenueForCrop,
     getProfitForCrop,
-    getTotalProfit
+    getTotalProfit,
+    getYieldForCropEnvFactors,
 } = require("./farm");
 
 describe("getYieldForPlant", () => {
@@ -20,7 +21,7 @@ describe("getYieldForPlant", () => {
 });
 
 describe("getYieldForCrop", () => {
-    test("Get yield for crop, simple", () => {
+    test("Get yield for crop", () => {
         const corn = {
             name: "corn",
             yield: 3,
@@ -32,6 +33,51 @@ describe("getYieldForCrop", () => {
         expect(getYieldForCrop(input)).toBe(30);
     });
 });
+
+describe("getYieldForCropEnvFactors", () => {
+    test("Get yield for crop, with environment factors", () => {
+        const corn = {
+            name: "corn",
+            yield: 30,
+            factors: {
+              sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+              },
+              wind: {
+                low: 10,
+                medium: 0,
+                high: -10,
+              },
+            },
+          };
+          const avocado = {
+            name: "avocado",
+            yield: 3,
+            factors: {
+              sun: {
+                low: -20,
+                medium: 0,
+                high: 50,
+              },
+              wind: {
+                low: 0,
+                medium: -30,
+                high: -60,
+              },
+            },
+          };
+          const environmentFactors = {
+            sun: "high",
+            wind: "high",
+            ground: "soft"
+          };
+        expect(getYieldForCropEnvFactors({crop: corn, numCrops: 10}, environmentFactors)).toBe(300);
+        expect(getYieldForCropEnvFactors({crop: avocado, numCrops: 10}, environmentFactors)).toBe(30);
+    });
+});
+
 
 describe("getTotalYield", () => {
     test("Calculate total yield with multiple crops", () => {
@@ -100,7 +146,7 @@ describe("getProfitForCrop", () => {
         yield: 4,
     };
 
-    test("Get profit for crop, simple", () => {
+    test("Get profit for crop", () => {
         const input = {
             crop: pumpkin,
             numCrops: 10,
