@@ -1,13 +1,51 @@
-// Tests are OK!
-//Functions without environment factors.
-const getYieldForPlant = (crop) => {
+//
+// Functions with environment factors.
+// Get yield for plant.
+const getYieldForPlant = (crop, environmentFactors) => {
+    if (!environmentFactors || (environmentFactors.sun === "medium" || environmentFactors.wind === "medium")) {
         return crop.yield;
-    };
+    }
+    if (environmentFactors.sun && environmentFactors.wind) {
+        if (environmentFactors.sun) {
+            if (environmentFactors.sun === "low") {
+           sunFactors = crop.factors.sun.low
+            } else if (environmentFactors.sun === "high") {
+                sunFactors = crop.factors.sun.high
+            } 
+        }
+        if (environmentFactors.wind) {
+            if (environmentFactors.wind === "low") {
+                windFactors = crop.factors.wind.low
+            } else if (environmentFactors.wind === "high") {
+                windFactors = crop.factors.wind.high
+            }
+        }
+        return ((crop.yield * sunFactors) / 100) + ((crop.yield * windFactors) / 100) + crop.yield;
+    }
+    if (environmentFactors.sun) {
+        if (environmentFactors.sun === "low") {
+            totalFactors = crop.factors.sun.low
+        } else if (environmentFactors.sun === "high") {
+            totalFactors = crop.factors.sun.high
+        }
+        return ((crop.yield * totalFactors) / 100) + crop.yield;
+    } 
+    if (environmentFactors.wind) {
+        if (environmentFactors.wind === "low") {
+            totalFactors = crop.factors.wind.low
+        } else if (environmentFactors.wind === "high") {
+            totalFactors = crop.factors.wind.high
+        }
+        return ((crop.yield * totalFactors) / 100) + crop.yield;
+    }
+};
 
+// Get yield for crop.
 const getYieldForCrop = (input) => {
         return input.numCrops * input.crop.yield;
 };
-    
+
+// Get total yield with multiple crops.
 const getTotalYield = ({ crops }) => {
     const plantsYield = crops.map(crop => getYieldForCrop(crop));
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -15,56 +53,21 @@ const getTotalYield = ({ crops }) => {
     return totalYield;
 };
 
+// Get costs for crop.
 const getCostsForCrop= (input)=> input.numCrops;
 
+// Revenue for crop.
 const getRevenueForCrop = (input) => getYieldForCrop(input);
 
+// Profit for crop.
 const getProfitForCrop= (input)=>{
-     return   getRevenueForCrop(input) - getCostsForCrop(input)
+     return getRevenueForCrop(input) - getCostsForCrop(input)
 }
 
+// Total profit with multiple crops.
 const getTotalProfit = crop => crop.crops.reduce((sum, item) => {
         return sum + getProfitForCrop(item)},0);
 
-
-// functions with environment factors
-const getYieldForCropEnvFactors = (input, environmentFactors) => {
-    if (!environmentFactors) {
-        return input.numCrops * input.crop.yield;
-    }else
-    return input.numCrops * getYieldForPlant(input.crop, environmentFactors);
-}
-
-const getYieldForPlantWithFactors = (input, environmentFactors) => {
-    const lowSun = 0.5
-    const sunMedium = 1
-    const highSun = 1.5
-
-    const noWind = 1
-    const windy = 0.7
-    const storm = 0.4
-
-    let resultSun;
-    if (environmentFactors.sun === "low") {
-      resultSun = input.yield * lowSun;
-    } else if (environmentFactors.sun === "high") {
-      resultSun = input.yield * highSun;
-    } else {
-      resultSun = input.yield;
-    }
-
-    let resultWindAndSun;
-    if (environmentFactors.wind === "storm") {
-        resultWindAndSun = resultSun * storm;
-      } else if (environmentFactors.wind === "windy") {
-        resultWindAndSun = resultSun * windy;
-      } else {
-        resultWindAndSun = resultSun * noWind;
-      }
-      let resultWindAndSunRounded = Math.round (resultWindAndSun*100) / 100
-      return resultWindAndSunRounded
-
-};
 
 
 module.exports = {
@@ -75,6 +78,4 @@ module.exports = {
     getRevenueForCrop,
     getProfitForCrop,
     getTotalProfit,
-    getYieldForCropEnvFactors,
-    getYieldForPlantWithFactors,
-}
+};
