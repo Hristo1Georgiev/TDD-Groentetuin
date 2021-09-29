@@ -37,12 +37,15 @@ const getYieldForPlant = (crop, environmentFactors) => {
             totalFactors = crop.factors.wind.high
         }
         return ((crop.yield * totalFactors) / 100) + crop.yield;
-    }
+    };
 };
 
 // Get yield for crop.
-const getYieldForCrop = (input) => {
+const getYieldForCrop = (input, environmentFactors) => {
+    if (!environmentFactors || input.numCrops === 0) {
         return input.numCrops * input.crop.yield;
+    }
+    return input.numCrops * getYieldForPlant(input.crop, environmentFactors);
 };
 
 // Get total yield with multiple crops.
