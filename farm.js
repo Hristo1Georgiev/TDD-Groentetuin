@@ -49,10 +49,11 @@ const getYieldForCrop = (input, environmentFactors) => {
 };
 
 // Get total yield with multiple crops.
-const getTotalYield = ({ crops }) => {
-    const plantsYield = crops.map(crop => getYieldForCrop(crop));
+const getTotalYield = ({ crops }, environmentFactors) => {
+    const arrayYield = crops.map(crop => getYieldForCrop(crop, environmentFactors));
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const totalYield = plantsYield.reduce(reducer);
+    const totalYield = arrayYield.reduce(reducer);
+
     return totalYield;
 };
 

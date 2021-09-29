@@ -16,16 +16,16 @@ describe("getYieldForPlant", () => {
         name: "corn",
         yield: 30,
     };
-    const apple = {
-        name: "apple",
+    const apples = {
+        name: "apples",
         yield: 5,
     };
 
     test("Get yield for plant without environment factors - corn", () => {
         expect(getYieldForPlant(corn)).toBe(30);
     });
-    test("Get yield for for plant no env. factors - apple", () => {
-        expect(getYieldForPlant(apple)).toBe(5)
+    test("Get yield for for plant no env. factors - apples", () => {
+        expect(getYieldForPlant(apples)).toBe(5)
     })
 });
 
@@ -42,13 +42,13 @@ describe("getYieldForCrop", () => {
         };
     expect(getYieldForCrop(input)).toBe(30);
     });
-    test("Get yield for crop - apple", () => {
-        const apple = {
-            name: "apple",
+    test("Get yield for crop - apples", () => {
+        const apples = {
+            name: "apples",
             yield: 5,
         };
         const input = {
-            crop: apple,
+            crop: apples,
             numCrops: 5,
         };
     expect(getYieldForCrop(input)).toBe(25)
@@ -66,14 +66,14 @@ describe("getTotalYield", () => {
             name: "pumpkin",
             yield: 4,
         };
-        const apple = {
-            name: "apple",
+        const apples = {
+            name: "apples",
             yield: 5,
         };
         const crops = [
             { crop: corn, numCrops: 5 },
             { crop: pumpkin, numCrops: 2 },
-            { crop: apple, numCrops: 5},
+            { crop: apples, numCrops: 5},
         ];
     expect(getTotalYield({ crops })).toBe(48);
     });
@@ -95,8 +95,8 @@ describe("getCostsForCrop", ()=>{
         name: "corn",
         yield: 3,
     };
-    const apple = {
-            name: "apple",
+    const apples = {
+            name: "apples",
             yield: 5,
     };
     test("Calculate the costs for one crop - corn", ()=> {
@@ -106,9 +106,9 @@ describe("getCostsForCrop", ()=>{
         };
     expect(getCostsForCrop( input)).toBe(10);
     });
-    test("Calculate the costs for one crop - apple", ()=> {
+    test("Calculate the costs for one crop - apples", ()=> {
         const input = {
-            crop: apple,
+            crop: apples,
             numCrops: 12,
         };
     expect(getCostsForCrop( input)).toBe(12);
@@ -128,13 +128,13 @@ describe("getRevenueForCrop", () => {
         };
     expect(getRevenueForCrop(input)).toBe(40);
     });
-        const apple = {
-        name: "apple",
+        const apples = {
+        name: "apples",
         yield: 7,
     };
     test("Get revenue for crop", () => {
         const input = {
-            crop: apple,
+            crop: apples,
             numCrops: 10,
         };
     expect(getRevenueForCrop(input)).toBe(70);
@@ -151,8 +151,8 @@ describe("getProfitForCrop", () => {
         name: "pumpkin",
         yield: 4,
     };
-     const apple = {
-        name: "apple",
+     const apples = {
+        name: "apples",
         yield: 7,
     };
     test("Get profit for crop - corn", () => {
@@ -171,7 +171,7 @@ describe("getProfitForCrop", () => {
     });
     test("Get profit for crop", () => {
         const input = {
-            crop: apple,
+            crop: apples,
             numCrops: 10,
         };
     expect(getProfitForCrop(input)).toBe(60);
@@ -189,14 +189,14 @@ describe("getTotalProfit", () => {
             name: "pumpkin",
             yield: 4,
         };
-        const apple = {
-            name: "apple",
+        const apples = {
+            name: "apples",
             yield: 7,
     };
         const crops = [
             { crop: corn, numCrops: 10 },
             { crop: pumpkin, numCrops: 10 },
-            { crop: apple, numCrops: 10}
+            { crop: apples, numCrops: 10}
         ];
     expect(getTotalProfit({ crops })).toBe(110);
     });
@@ -231,7 +231,7 @@ describe("getYieldForPlant with environment", () => {
         },
         }; 
         const apples = {
-        name: "apple",
+        name: "apples",
         yield: 7,
         factors: {
             sun: {
@@ -266,24 +266,28 @@ describe("getYieldForPlant with environment", () => {
         };
     expect(getYieldForPlant(pumpkin, environmentFactors)).toBe(6.8);
     });
-        test("Get yield for pumpkin with high wind", () => {
+
+    test("Get yield for pumpkin with high wind", () => {
         const environmentFactors = {
             wind: "high",
         };
     expect(getYieldForPlant(pumpkin, environmentFactors)).toBe(4.8);
     });
+
     test("Get yield for pumpkin with low sun", () => {
         const environmentFactors = {
             sun: "low",
         };
     expect(getYieldForPlant(pumpkin, environmentFactors)).toBe(2);
     });
+
     test("Get yield for pumpkin with high sun", () => {
         const environmentFactors = {
             sun: "high",
         };
     expect(getYieldForPlant(pumpkin, environmentFactors)).toBe(6);
     });
+
     test("Get yield for pumpkin with high sun and low wind", () => {
         const environmentFactors = {
             sun: "high",
@@ -291,13 +295,15 @@ describe("getYieldForPlant with environment", () => {
         };
     expect(getYieldForPlant(pumpkin, environmentFactors)).toBe(8.8);
     });
-        test("Get yield for pumpkin with high wind and low sun", () => {
+
+    test("Get yield for pumpkin with high wind and low sun", () => {
         const environmentFactors = {
             sun: "low",
             wind: "high",
         };
     expect(getYieldForPlant(pumpkin, environmentFactors)).toBe(2.8);
     });
+
     test("Get yield for pumpkin with low sun and low wind", () => {
         const environmentFactors = {
             sun: "low",
@@ -305,6 +311,7 @@ describe("getYieldForPlant with environment", () => {
         };
     expect(getYieldForPlant(pumpkin, environmentFactors)).toBe(4.8);
     });
+
     test("Get yield for pumpkin with high wind and high sun", () => {
         const environmentFactors = {
             sun: "high",
@@ -312,53 +319,60 @@ describe("getYieldForPlant with environment", () => {
         };
     expect(getYieldForPlant(pumpkin, environmentFactors)).toBe(6.8);
     });
-// Tests yeld for apple with factors.
-    test("Get yield for pumpkin with low wind", () => {
+// Tests yeld for apples with factors.
+    test("Get yield for apples with low wind", () => {
         const environmentFactors = {
             wind: "low",
         };
     expect(getYieldForPlant(apples, environmentFactors)).toBe(11.9);
     });
-    test("Get yield for pumpkin with high wind", () => {
+
+    test("Get yield for apples with high wind", () => {
         const environmentFactors = {
             wind: "high",
         };
     expect(getYieldForPlant(apples, environmentFactors)).toBe(6.3);
     });
-    test("Get yield for pumpkin with low sun", () => {
+
+    test("Get yield for apples with low sun", () => {
         const environmentFactors = {
             sun: "low",
         };
     expect(getYieldForPlant(apples, environmentFactors)).toBe(4.9);
     });
-    test("Get yield for pumpkin with high sun", () => {
+
+    test("Get yield for apples with high sun", () => {
         const environmentFactors = {
             sun: "high",
         };
     expect(getYieldForPlant(apples, environmentFactors)).toBe(10.5);
     });
-    test("Get yield for pumpkin with high sun and low wind", () => {
+
+    test("Get yield for apples with high sun and low wind", () => {
         const environmentFactors = {
             sun: "high",
             wind: "low",
         };
     expect(getYieldForPlant(apples, environmentFactors)).toBe(15.4);
     });
-    test("Get yield for pumpkin with high wind and low sun", () => {
+
+    test("Get yield for apples with high wind and low sun", () => {
         const environmentFactors = {
             sun: "low",
             wind: "high",
         };
     expect(getYieldForPlant(apples, environmentFactors)).toBe(4.2);
     });
-    test("Get yield for pumpkin with low sun and low wind", () => {
+
+    test("Get yield for apples with low sun and low wind", () => {
         const environmentFactors = {
             sun: "low",
             wind: "low",
         };
     expect(getYieldForPlant(apples, environmentFactors)).toBe(9.8);
     });
-        test("Get yield for pumpkin with high wind and high sun", () => {
+
+    test("Get yield for apples with high wind and high sun", () => {
         const environmentFactors = {
             sun: "high",
             wind: "high",
@@ -397,7 +411,7 @@ describe("getYieldForCrop with environment", () => {
             },
         }; 
         const apples = {
-        name: "apple",
+        name: "apples",
         yield: 7,
         factors: {
             sun: {
@@ -449,7 +463,6 @@ describe("getYieldForCrop with environment", () => {
     expect(getYieldForCrop(input, environmentFactors)).toBe(154);
     });
 
-
     test("Get yield for apples with low sun high wind ", () => {
         const input = {
             crop: apples,
@@ -463,4 +476,63 @@ describe("getYieldForCrop with environment", () => {
     });
 });
 
+// Get total yield with enviromet factors
+describe("getTotalYield with environment factors", () => {
+        const pumpkin = {
+        name: "pumpkin",
+        yield: 4,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: 70,
+                medium: 0,
+                high: 20,
+            },
+            },
+        }; 
+        const apples = {
+        name: "apples",
+        yield: 7,
+        factors: {
+            sun: {
+                low: -30,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: 70,
+                medium: 0,
+                high: -10,
+            },
+            }
+        };  
+
+    test("Get total yield crops, with high sun and high wind", () => {
+        const crops = [
+            { crop: pumpkin, numCrops: 10 },
+            { crop: apples, numCrops: 10}
+        ];
+        const environmentFactors = {
+            sun: "high",
+            wind: "high",
+        };
+    expect(getTotalYield({crops}, environmentFactors)).toBe(166);
+    });
+
+    test("Get total yield crops, with low sun and low wind", () => {
+        const crops = [
+            { crop: pumpkin, numCrops: 10 },
+            { crop: apples, numCrops: 10}
+        ];
+        const environmentFactors = {
+            sun: "low",
+            wind: "low",
+        };
+    expect(getTotalYield({crops}, environmentFactors)).toBe(146);
+    });
+});
 
