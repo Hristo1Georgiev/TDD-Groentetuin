@@ -202,6 +202,7 @@ describe("getTotalProfit", () => {
     });
 });
 
+// Tests corn with factors.
 describe("getYieldForPlant with environment", () => {
         const corn = {
         name: "corn",
@@ -246,7 +247,7 @@ describe("getYieldForPlant with environment", () => {
             },
         },
         };  
-// Tests corn with factors.
+
     test("Get yield for corn with low sun", () => {
         const environmentFactors = {
             sun: "low",
@@ -535,4 +536,67 @@ describe("getTotalYield with environment factors", () => {
     expect(getTotalYield({crops}, environmentFactors)).toBe(146);
     });
 });
+
+// Get ravenue for crop with enviroment factors.
+describe("getRevenueForCrop with environment factors", () => {
+        const pumpkin = {
+        name: "pumpkin",
+        yield: 4,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: 70,
+                medium: 0,
+                high: 20,
+            },
+            },
+        }; 
+        const apples = {
+        name: "apples",
+        yield: 7,
+        factors: {
+            sun: {
+                low: -30,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: 70,
+                medium: 0,
+                high: -10,
+            },
+            }
+        }; 
+
+    test("Get revenue for crop, with low wind and high sun", () => {
+        const input = {
+            crop: apples,
+            numCrops: 10,
+        };
+
+        const environmentFactors = {
+            wind: "low",
+            sun : "high",
+        };
+        expect(getRevenueForCrop(input, environmentFactors)).toBe(154);
+    });
+
+    test("Get revenue for crop, with high wind and low sun", () => {
+        const input = {
+            crop: pumpkin,
+            numCrops: 10,
+        };
+
+        const environmentFactors = {
+            wind: "high",
+            sun: "low"
+        };
+        expect(getRevenueForCrop(input, environmentFactors)).toBe(28);
+    });
+});
+
 
