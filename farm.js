@@ -67,9 +67,13 @@ const getRevenueForCrop = (input, environmentFactors) => getYieldForCrop(input, 
 const getProfitForCrop = (input, environmentFactors) => getRevenueForCrop(input, environmentFactors) - getCostsForCrop(input);
 
 // Total profit with multiple crops.
-const getTotalProfit = crop => crop.crops.reduce((sum, item) => {
-        return sum + getProfitForCrop(item)},0);
+const getTotalProfit = ({ crops }, environmentFactors) => {
+    const arrayProfit = crops.map(c => getProfitForCrop(c, environmentFactors));
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    const totalProfit = arrayProfit.reduce(reducer);
 
+    return totalProfit;
+};
 
 
 module.exports = {
