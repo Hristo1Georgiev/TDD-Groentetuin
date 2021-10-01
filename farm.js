@@ -64,9 +64,7 @@ const getCostsForCrop= (input)=> input.numCrops;
 const getRevenueForCrop = (input, environmentFactors) => getYieldForCrop(input, environmentFactors) ;
 
 // Profit for crop.
-const getProfitForCrop= (input)=>{
-     return getRevenueForCrop(input) - getCostsForCrop(input)
-}
+const getProfitForCrop = (input, environmentFactors) => getRevenueForCrop(input, environmentFactors) - getCostsForCrop(input);
 
 // Total profit with multiple crops.
 const getTotalProfit = crop => crop.crops.reduce((sum, item) => {
